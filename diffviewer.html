@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<!--
+Copyright 2019 Franklin Orellana
+
+This file is part of DiffViewer.
+
+DiffViewer is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+DiffViewer is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with DiffViewer.  If not, see <https://www.gnu.org/licenses/>. -->
+
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>Diff Viewer</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <meta name="keywords" content="diff ,git ,diff viewer, compare, vuejs, ace, ace-diff">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel='stylesheet' type='text/css' media='screen' href='./css/main.css'>
+  <style type="text/css" media="screen">
+    .ace_editor {
+      border: 1px solid lightgray;
+      margin: auto;
+      height: 200px;
+      width: 100%;
+    }
+
+    .scrollmargin {
+      height: 80px;
+      text-align: center;
+    }
+
+    .container {
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <noscript>
+    You are using an unsupported browser or browser configuration, please download any modern browser to use this site!
+  </noscript>
+  <script nomodule>
+    alert('You are using an older browser!, please download any modern browser to use this site.');</script>
+  <div id="app" class="container" :style="show">
+    <div class="row">
+      <div class="page-header w-100">
+        <span class="d-block d-md-inline">{{i18n.msg.pasteDiffHere}}</span>
+        <span class="col-sm-auto"></span>
+        <a class="col-sm-auto" @click="toggleOriginalDiff" href="#">{{i18n.msg.hide_show}}</a>
+        <a href="https://github.com/frank-orellana/diff-viewer" class="btn-link float-right d-none d-sm-inline">
+          <img src="./img/github.svg" alt="github logo" style="height: 1em" />
+          {{i18n.msg.viewInGithub}}
+        </a>
+      </div>
+    </div>
+    <div class="row" style="height:200px" id="diff-file-div">
+      <div name="difffile" id="editor0" class="col-sm"></div>
+    </div>
+    <div class="row">
+      <button v-on:click="process" class="w-auto float-left">{{i18n.msg.process}}</button>
+      <span class="col-sm-auto w-50 text-right">{{i18n.msg.filesInDiff}}:</span>
+      <select v-model="selectedFile" class="col-sm-3 float-right">
+        <option v-for="f,index in files" :value="index">
+          {{f.name + (f.isNew?'('+i18n.msg.new+')':'' + (f.isDeleted?'('+i18n.msg.deleted+')':''))}}</option>
+      </select>
+    </div>
+    <div class="row" style="height:90%">
+      <div class="col-sm">
+        <div class="custom"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./lib/ace/ace.js" type="text/javascript" charset="utf-8"></script>
+  <script src="./lib/ace/ext-modelist.js" type="text/javascript" charset="utf-8"></script>
+
+
+  <!-- Thanks to https://github.com/ace-diff/ace-diff -->
+  <script src="https://unpkg.com/ace-diff@^2"></script>
+  <link href="https://unpkg.com/ace-diff@^2/dist/ace-diff.min.css" rel="stylesheet">
+
+  <script src='diffviewer.js' type=module></script>
+
+</body>
+
+</html>
