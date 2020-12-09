@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with DiffViewer.  If not, see <https://www.gnu.org/licenses/>. */
 import Vue from "./lib/vue/vue.esm.browser.min.js";
 import i18n from "./lib/i18n.js";
+import { diff } from "./lib/diff.js";
 
 declare const ace: any;
 declare const AceDiff: any;
@@ -62,83 +63,9 @@ new Vue({
       const lines: string[] = this.editor0.getValue().split('\n');
 
       this.files = [];
+      const files = diff(lines);
 
-      let x = lines.shift();
-      while (x != undefined) {
-        if (x.startsWith('diff')) {
-          const file: any = {};
-          file.name = x.match(/[^\/]+$/)[0]; //.replace('\r','');
-
-          let tmp = lines.shift();
-          while (!tmp.startsWith('index')) {
-            switch (tmp.match(/^\w+/)[0]) {
-              case 'new': file.isNew = true; break;
-              case 'deleted': file.isDeleted = true; break;
-            }
-
-            tmp = lines.shift();
-          }
-          file.index = tmp;
-
-          file.A = {}; file.B = {};
-          file.A.path = lines.shift();
-          file.B.path = lines.shift();
-          file.A.lines = file.A.path + "\n";
-          file.B.lines = file.B.path + "\n";
-
-          x = lines.shift();
-
-          let linesBefore: string[], linesDeleted: string[], linesInserted: string[], linesAfter: string[];
-
-          while (x != undefined && x.startsWith('@@')) {
-
-            file.A.lines += (file.A.lines ? '\n' : '') + x;
-            file.B.lines += (file.B.lines ? '\n' : '') + x;
-
-            x = lines.shift();
-
-            linesBefore = [];
-            while (x != undefined && !x.startsWith('-') && !x.startsWith('+')) {
-              linesBefore.push(x);
-              x = lines.shift();
-            }
-
-            while (x != undefined && (x.startsWith('-') || x.startsWith('+'))) {
-
-              linesDeleted = [];
-              while (x != undefined && x.startsWith('-')) {
-                linesDeleted.push(x);
-                x = lines.shift();
-              }
-
-              linesInserted = [];
-              while (x != undefined && x.startsWith('+')) {
-                linesInserted.push(x);
-                x = lines.shift();
-              }
-
-              while (linesDeleted.length < linesInserted.length)
-                linesDeleted.push('');
-              while (linesDeleted.length > linesInserted.length)
-                linesInserted.push('');
-
-              linesAfter = [];
-              while (x != undefined && !x.startsWith('-') && !x.startsWith('+') && !x.startsWith('@@') && !x.startsWith('diff')) {
-                linesAfter.push(x);
-                x = lines.shift();
-              }
-
-              file.A.lines += (file.A.lines ? '\n' : '') + [linesBefore.join('\n'),linesDeleted.join('\n'), linesAfter.join('\n')].join('\n');
-              file.B.lines += (file.B.lines ? '\n' : '') + [linesBefore.join('\n'),linesInserted.join('\n'), linesAfter.join('\n')].join('\n');
-            }
-          }
-
-          this.files.push(file);
-        } else {
-          console.warn('diff expected, got: ' + x);
-          x = lines.shift();
-        }
-      }
+      this.files = files;
 
       console.log(lines, this.files);
       this.selectedFile = 0;
