@@ -1,9 +1,8 @@
-
-diff --git a/ttt/__custom/ooo/css/ooo_estilo_ttt.css b/ttt/__custom/ooo/css/ooo_estilo_ttt.css
+diff --git a/test.css b/test.css
 new file mode 100644
 index 00000000..0e978668
 --- /dev/null
-+++ b/ttt/__custom/ooo/css/ooo_estilo_ttt.css
++++ b/test.css
 @@ -0,0 +1,33 @@
 +div.scoPageHeader div {
 +	float: left;
@@ -39,10 +38,10 @@ index 00000000..0e978668
 +	float:left;
 +}
 \ No newline at end of file
-diff --git a/ttt/__custom/ooo/libreria/funciones_ttt.js b/ttt/__custom/ooo/libreria/funciones_ttt.js
+diff --git atest1.js btest1.js
 index 12e4b1ed..a692d72d 100644
---- a/ttt/__custom/ooo/libreria/funciones_ttt.js
-+++ b/ttt/__custom/ooo/libreria/funciones_ttt.js
+--- atest1.js
++++ btest1.js
 @@ -9,25 +9,20 @@ function addEvent(evnt, elem, func) {
  	}
  }
@@ -212,11 +211,11 @@ index 12e4b1ed..a692d72d 100644
 +}
  
  
-diff --git a/ttt/__custom/ooo/libreria/functions_portal.js b/ttt/__custom/ooo/libreria/functions_portal.js
+diff --git a/test2.js b/test2.js
 new file mode 100644
 index 00000000..84048c86
 --- /dev/null
-+++ b/ttt/__custom/ooo/libreria/functions_portal.js
++++ b/test2.js
 @@ -0,0 +1,1005 @@
 +//Original code file: functions_portal.raw.js
 +//Use the above mentioned file for modifications or debugging.
