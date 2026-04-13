@@ -22,4 +22,4 @@ Requirements: pnpm
 
 For testing: pnpm test
 
-node version: 19.9 max
+node version: 24
