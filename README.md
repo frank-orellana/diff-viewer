@@ -18,6 +18,8 @@ DiffViewer is built on top of [Ace Editor](https://ace.c9.io/), [ace-diff](https
 
 ## DEV
 
-For testing: npm test or pnpm test
+Requirements: pnpm
+
+For testing: pnpm test
 
 node version: 19.9 max
