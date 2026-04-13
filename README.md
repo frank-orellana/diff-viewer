@@ -14,3 +14,10 @@ If the diff contains differences of many files, these files will be shown in the
 
 ## Components used
 DiffViewer is built on top of [Ace Editor](https://ace.c9.io/), [ace-diff](https://github.com/ace-diff/ace-diff/), [vuejs](https://vuejs.org) and [bootstrap](https://getbootstrap.com/)
+
+
+## DEV
+
+For testing: npm test or pnpm test
+
+node version: 19.9 max
